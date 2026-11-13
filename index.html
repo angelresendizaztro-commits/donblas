@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cenaduría Don Blas | Con Sabor Queretano</title>
+  <meta name="description" content="Cenaduría Don Blas - Cocina económica y antojitos mexicanos tradicionales con sabor queretano. Llama, ordena y recoge al (442) 223-5456." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mostaza: {
+              DEFAULT: '#E5A922',
+              dark: '#C98E12',
+              light: '#F7D279'
+            },
+            terracota: {
+              DEFAULT: '#B82925',
+              dark: '#8F1C19',
+              light: '#D9433E'
+            },
+            carbon: '#241E1B',
+            crema: '#FAF6F0',
+            arena: '#F1E8DA'
+          },
+          fontFamily: {
+            display: ['Fraunces', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Patrón sutil inspirado en papel picado / talavera tradicional */
+    .bg-patron {
+      background-color: #FAF6F0;
+      background-image: radial-gradient(#E5A922 0.75px, transparent 0.75px), radial-gradient(#B82925 0.75px, #FAF6F0 0.75px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+    }
+    .borde-mexicano {
+      background: repeating-linear-gradient(
+        90deg,
+        #B82925 0px,
+        #B82925 18px,
+        #E5A922 18px,
+        #E5A922 36px,
+        #241E1B 36px,
+        #241E1B 42px
+      );
+      height: 6px;
+    }
+  </style>
+</head>
+<body class="bg-crema text-carbon font-sans antialiased selection:bg-mostaza selection:text-carbon">
+
+  <!-- Barra superior decorativa -->
+  <div class="borde-mexicano w-full"></div>
+
+  <!-- Navegación fija -->
+  <header class="sticky top-0 z-40 bg-carbon/95 backdrop-blur-md text-crema border-b border-mostaza/30 shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <!-- Marca / Logo -->
+      <a href="#inicio" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-full bg-mostaza border-2 border-crema flex items-center justify-center overflow-hidden shadow-md shrink-0">
+          <img src="logo.jpg" alt="Logo Don Blas" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <span class="hidden font-display font-extrabold italic text-carbon text-lg leading-none">DB</span>
+        </div>
+        <div>
+          <span class="block font-display font-extrabold italic text-xl sm:text-2xl text-mostaza leading-none tracking-tight">Don Blas</span>
+          <span class="block text-[11px] uppercase tracking-widest text-crema/80 mt-0.5">Con Sabor Queretano</span>
+        </div>
+      </a>
+
+      <!-- Enlaces Desktop -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold">
+        <a href="#especialidades" class="hover:text-mostaza transition">Especialidades</a>
+        <a href="#menu" class="hover:text-mostaza transition">Menú Completo</a>
+        <a href="#como-pedir" class="hover:text-mostaza transition">Cómo Pedir</a>
+        <a href="#contacto" class="hover:text-mostaza transition">Contacto</a>
+      </nav>
+
+      <!-- Botones de Acción Rápida -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="toggleCart()" class="relative bg-arena/15 hover:bg-arena/25 text-crema px-3 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 border border-crema/15 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-mostaza" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span class="hidden sm:inline">Mi Orden</span>
+          <span id="cart-badge" class="bg-terracota text-white text-xs font-bold px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+
+        <a href="tel:4422235456" class="bg-terracota hover:bg-terracota-dark text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 shadow-md transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-mostaza" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+          </svg>
+          <span>(442) 223-5456</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="relative overflow-hidden bg-carbon text-crema">
+    <!-- Fondo con degradado cálido -->
+    <div class="absolute inset-0 bg-gradient-to-br from-terracota-dark/90 via-carbon to-carbon opacity-95"></div>
+    <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-mostaza/15 blur-3xl"></div>
+    <div class="absolute -left-24 bottom-0 w-80 h-80 rounded-full bg-terracota/25 blur-3xl"></div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-12 gap-10 items-center">
+      <!-- Texto Principal -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 bg-mostaza/20 border border-mostaza/40 text-mostaza px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold tracking-wide uppercase">
+          <span>★</span> Tradición y sazón casero en Querétaro
+        </div>
+
+        <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
+          Cenaduría <span class="italic text-mostaza">"Don Blas"</span>
+          <span class="block text-2xl sm:text-3xl font-bold text-crema/90 mt-2">Con Sabor Queretano</span>
+        </h1>
+
+        <p class="text-crema/80 text-base sm:text-lg max-w-xl leading-relaxed">
+          Antojitos mexicanos preparados al momento con recetas tradicionales: enchiladas queretanas, guajolotes doraditos, pozole, tostadas, tacos y sopes con el auténtico toque de casa.
+        </p>
+
+        <!-- Banner Llama, Ordena y Recoge -->
+        <div class="bg-mostaza text-carbon p-4 sm:p-5 rounded-2xl shadow-xl max-w-xl border-2 border-crema/20">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="inline-block bg-carbon text-mostaza text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-md mb-1">
+                Servicio Rápido
+              </span>
+              <p class="font-display font-extrabold text-xl sm:text-2xl leading-tight">Llama, ordena y recoge</p>
+              <p class="text-carbon/85 font-semibold text-sm">Tu cena lista y calientita sin hacer fila</p>
+            </div>
+            <a href="tel:4422235456" class="bg-terracota hover:bg-terracota-dark text-white font-extrabold text-lg px-5 py-3 rounded-xl shadow-md text-center transition shrink-0">
+              (442) 223.5456
+            </a>
+          </div>
+        </div>
+
+        <!-- Botones secundarios -->
+        <div class="flex flex-wrap items-center gap-3 pt-1">
+          <a href="#menu" class="bg-crema text-carbon hover:bg-mostaza font-bold px-6 py-3.5 rounded-xl transition shadow">
+            Ver Menú y Precios
+          </a>
+          <button onclick="toggleCart()" class="border border-crema/30 hover:border-mostaza text-crema hover:text-mostaza font-semibold px-6 py-3.5 rounded-xl transition">
+            Armar mi pedido rápido
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjeta Visual / Foto Destacada -->
+      <div class="lg:col-span-5">
+        <div class="relative bg-arena/10 p-3 rounded-3xl border border-mostaza/30 shadow-2xl">
+          <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-carbon/60 relative flex items-center justify-center">
+            <img src="enchiladas.jpg" alt="Enchiladas Queretanas Don Blas" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <!-- Respaldo elegante si aún no se agrega la foto -->
+            <div class="hidden flex-col items-center justify-center text-center p-6">
+              <div class="w-24 h-24 rounded-full bg-mostaza flex items-center justify-center shadow-lg mb-3">
+                <span class="font-display italic font-extrabold text-3xl text-carbon">Blas</span>
+              </div>
+              <p class="font-display font-bold text-xl text-mostaza">Con Sabor Queretano</p>
+              <p class="text-xs text-crema/70 mt-1">Coloca tu foto como "enchiladas.jpg" en la carpeta para mostrarla aquí</p>
+            </div>
+          </div>
+
+          <!-- Etiqueta flotante -->
+          <div class="mt-3 flex items-center justify-between px-2 text-sm">
+            <div>
+              <p class="font-bold text-mostaza">Enchiladas Tradicionales</p>
+              <p class="text-xs text-crema/70">Con papas, zanahoria, lechuga y queso fresco</p>
+            </div>
+            <span class="bg-terracota text-white font-extrabold px-3 py-1 rounded-lg">$95.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Especialidades Visuales -->
+  <section id="especialidades" class="py-16 bg-patron border-b border-carbon/10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-terracota font-bold text-xs uppercase tracking-widest">Lo favorito de la casa</span>
+        <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-carbon mt-1">Nuestras Especialidades</h2>
+        <p class="text-carbon/75 mt-2 text-sm sm:text-base">Platillos tradicionales preparados con ingredientes frescos y el auténtico sazón queretano.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1: Enchiladas -->
+        <article class="bg-white rounded-2xl overflow-hidden shadow-md border border-carbon/10 flex flex-col justify-between hover:shadow-xl transition">
+          <div>
+            <div class="h-44 bg-arena relative overflow-hidden flex items-center justify-center">
+              <img src="enchiladas.jpg" alt="Enchiladas Tradicionales" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="hidden flex-col items-center text-carbon/50 p-4 text-center">
+                <span class="text-3xl mb-1">🍽️</span>
+                <span class="text-xs font-semibold">Enchiladas Queretanas</span>
+              </div>
+              <span class="absolute top-3 right-3 bg-carbon/90 text-mostaza font-extrabold text-sm px-3 py-1 rounded-full">$95.00</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display font-bold text-lg text-carbon">Enchiladas Tradicionales</h3>
+              <p class="text-xs text-carbon/70 mt-1">Bañadas en salsa roja tradicional con papas, zanahoria, lechuga y abundante queso.</p>
+            </div>
+          </div>
+          <div class="px-5 pb-5">
+            <button onclick="addToCart('Enchiladas Tradicionales', 95)" class="w-full bg-mostaza hover:bg-mostaza-dark text-carbon font-bold py-2.5 rounded-xl text-sm transition">
+              + Agregar a mi orden
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 2: Guajolotes -->
+        <article class="bg-white rounded-2xl overflow-hidden shadow-md border border-carbon/10 flex flex-col justify-between hover:shadow-xl transition">
+          <div>
+            <div class="h-44 bg-arena relative overflow-hidden flex items-center justify-center">
+              <img src="guajolote.jpg" alt="Guajolotes" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="hidden flex-col items-center text-carbon/50 p-4 text-center">
+                <span class="text-3xl mb-1">🥪</span>
+                <span class="text-xs font-semibold">Guajolote Queretano</span>
+              </div>
+              <span class="absolute top-3 right-3 bg-carbon/90 text-mostaza font-extrabold text-sm px-3 py-1 rounded-full">$45.00</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display font-bold text-lg text-carbon">Guajolotes</h3>
+              <p class="text-xs text-carbon/70 mt-1">Clásico pan dorado relleno a elegir de carne, pollo o jamón, con crema, queso y verdura.</p>
+            </div>
+          </div>
+          <div class="px-5 pb-5">
+            <button onclick="addToCart('Guajolote (Carne/Pollo/Jamón)', 45)" class="w-full bg-mostaza hover:bg-mostaza-dark text-carbon font-bold py-2.5 rounded-xl text-sm transition">
+              + Agregar a mi orden
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 3: Tostadas -->
+        <article class="bg-white rounded-2xl overflow-hidden shadow-md border border-carbon/10 flex flex-col justify-between hover:shadow-xl transition">
+          <div>
+            <div class="h-44 bg-arena relative overflow-hidden flex items-center justify-center">
+              <img src="tostadas.jpg" alt="Tostadas" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="hidden flex-col items-center text-carbon/50 p-4 text-center">
+                <span class="text-3xl mb-1">🌮</span>
+                <span class="text-xs font-semibold">Tostadas Crujientes</span>
+              </div>
+              <span class="absolute top-3 right-3 bg-carbon/90 text-mostaza font-extrabold text-sm px-3 py-1 rounded-full">$45.00</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display font-bold text-lg text-carbon">Tostadas</h3>
+              <p class="text-xs text-carbon/70 mt-1">Crujientes y bien servidas con carne, pollo, pata o jamón, crema, queso, lechuga y aguacate.</p>
+            </div>
+          </div>
+          <div class="px-5 pb-5">
+            <button onclick="addToCart('Tostada (Carne/Pollo/Pata/Jamón)', 45)" class="w-full bg-mostaza hover:bg-mostaza-dark text-carbon font-bold py-2.5 rounded-xl text-sm transition">
+              + Agregar a mi orden
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 4: Tacos -->
+        <article class="bg-white rounded-2xl overflow-hidden shadow-md border border-carbon/10 flex flex-col justify-between hover:shadow-xl transition">
+          <div>
+            <div class="h-44 bg-arena relative overflow-hidden flex items-center justify-center">
+              <img src="tacos.jpg" alt="Tacos" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="hidden flex-col items-center text-carbon/50 p-4 text-center">
+                <span class="text-3xl mb-1">🌶️</span>
+                <span class="text-xs font-semibold">Tacos Dorados</span>
+              </div>
+              <span class="absolute top-3 right-3 bg-carbon/90 text-mostaza font-extrabold text-sm px-3 py-1 rounded-full">$20.00</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display font-bold text-lg text-carbon">Tacos</h3>
+              <p class="text-xs text-carbon/70 mt-1">Doraditos y acompañados de salsa casera. Elige entre pollo, carne, papa o sesos.</p>
+            </div>
+          </div>
+          <div class="px-5 pb-5">
+            <button onclick="addToCart('Taco (Pollo/Carne/Papa/Sesos)', 20)" class="w-full bg-mostaza hover:bg-mostaza-dark text-carbon font-bold py-2.5 rounded-xl text-sm transition">
+              + Agregar a mi orden
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menú Digital Completo -->
+  <section id="menu" class="py-16 bg-crema">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-terracota font-bold text-xs uppercase tracking-widest">Precios vigentes</span>
+        <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-carbon mt-1">Menú Completo</h2>
+        <p class="text-carbon/75 mt-2 text-sm sm:text-base">Filtra por categoría o busca tu antojito favorito y agrégalo para calcular el total de tu orden.</p>
+      </div>
+
+      <!-- Buscador y Filtros -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-carbon/10 mb-8 space-y-4">
+        <div class="relative">
+          <input
+            type="text"
+            id="search-input"
+            oninput="renderMenu()"
+            placeholder="Buscar platillo (ej. enchiladas, pozole, guajolote, gorditas, agua...)"
+            class="w-full pl-10 pr-4 py-3 rounded-xl bg-crema border border-carbon/15 text-sm focus:outline-none focus:border-terracota"
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-carbon/40 absolute left-3 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+
+        <div class="flex flex-wrap gap-2" id="category-filters">
+          <button onclick="setCategory('Todos')" data-cat="Todos" class="cat-btn active bg-carbon text-mostaza px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition">Todos</button>
+          <button onclick="setCategory('Especialidades')" data-cat="Especialidades" class="cat-btn bg-arena text-carbon hover:bg-mostaza/30 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition">Especialidades</button>
+          <button onclick="setCategory('Antojitos')" data-cat="Antojitos" class="cat-btn bg-arena text-carbon hover:bg-mostaza/30 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition">Antojitos y Tortas</button>
+          <button onclick="setCategory('Extras')" data-cat="Extras" class="cat-btn bg-arena text-carbon hover:bg-mostaza/30 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition">Órdenes Extra</button>
+          <button onclick="setCategory('Bebidas')" data-cat="Bebidas" class="cat-btn bg-arena text-carbon hover:bg-mostaza/30 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition">Bebidas</button>
+        </div>
+      </div>
+
+      <!-- Contenedor Dinámico del Menú -->
+      <div id="menu-container" class="space-y-8"></div>
+    </div>
+  </section>
+
+  <!-- Banner Cómo Pedir -->
+  <section id="como-pedir" class="py-14 bg-terracota text-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="font-display font-extrabold text-3xl sm:text-4xl">¿Cómo hacer tu pedido?</h2>
+        <p class="text-white/85 mt-1">Fácil, rápido y directo de nuestra cocina a tu mesa.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 text-carbon">
+        <div class="bg-crema p-6 rounded-2xl shadow-lg">
+          <span class="w-10 h-10 rounded-full bg-mostaza font-display font-extrabold text-lg flex items-center justify-center mb-4">1</span>
+          <h3 class="font-display font-bold text-lg">Elige tus antojitos</h3>
+          <p class="text-sm text-carbon/75 mt-1">Revisa nuestro menú y usa el botón <strong>"+ Agregar"</strong> para calcular el monto exacto de tu orden.</p>
+        </div>
+        <div class="bg-crema p-6 rounded-2xl shadow-lg">
+          <span class="w-10 h-10 rounded-full bg-mostaza font-display font-extrabold text-lg flex items-center justify-center mb-4">2</span>
+          <h3 class="font-display font-bold text-lg">Llama al (442) 223-5456</h3>
+          <p class="text-sm text-carbon/75 mt-1">Comunícate directamente con nosotros para confirmar tus sabores (pollo, carne, jamón, etc.).</p>
+        </div>
+        <div class="bg-crema p-6 rounded-2xl shadow-lg">
+          <span class="w-10 h-10 rounded-full bg-mostaza font-display font-extrabold text-lg flex items-center justify-center mb-4">3</span>
+          <h3 class="font-display font-bold text-lg">Pasa y recoge</h3>
+          <p class="text-sm text-carbon/75 mt-1">Tu pedido estará recién hecho y empacado para llevar en cuanto llegues a la cenaduría.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / Contacto -->
+  <footer id="contacto" class="bg-carbon text-crema pt-14 pb-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-3 gap-8 pb-10 border-b border-crema/15">
+      <div>
+        <span class="font-display font-extrabold italic text-3xl text-mostaza">Don Blas</span>
+        <p class="text-xs uppercase tracking-widest text-crema/70 mt-1">Con Sabor Queretano</p>
+        <p class="text-sm text-crema/80 mt-4 leading-relaxed">
+          Cenaduría y cocina económica tradicional. El verdadero sabor de Querétaro en cada platillo.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-display font-bold text-lg text-mostaza mb-3">Pedidos y Atención</h4>
+        <ul class="space-y-2 text-sm text-crema/85">
+          <li><strong>Teléfono:</strong> <a href="tel:4422235456" class="underline hover:text-mostaza">(442) 223-5456</a></li>
+          <li><strong>Modalidad:</strong> Llama, ordena y recoge / Consumo local</li>
+          <li><strong>Ubicación:</strong> Querétaro, Qro., México</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-display font-bold text-lg text-mostaza mb-3">Ordena Ahora</h4>
+        <p class="text-sm text-crema/80 mb-4">¿Se te antojaron unas enchiladas o un pozole caliente?</p>
+        <a href="tel:4422235456" class="inline-flex items-center gap-2 bg-mostaza hover:bg-mostaza-dark text-carbon font-extrabold px-5 py-3 rounded-xl transition">
+          <span>Llamar al (442) 223-5456</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-crema/60 gap-2">
+      <p>© <span id="year"></span> Cenaduría "Don Blas" — Con Sabor Queretano. Todos los derechos reservados.</p>
+      <p>Hecho con tradición queretana.</p>
+    </div>
+  </footer>
+
+  <!-- Panel Lateral de Orden / Calculadora de Pedido -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div onclick="toggleCart()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+    <aside class="absolute right-0 top-0 h-full w-full max-w-md bg-crema text-carbon shadow-2xl flex flex-col justify-between p-6">
+      <div>
+        <div class="flex items-center justify-between border-b border-carbon/15 pb-4">
+          <div>
+            <h3 class="font-display font-extrabold text-xl">Mi Orden — Don Blas</h3>
+            <p class="text-xs text-carbon/70">Calcula tu total antes de llamar</p>
+          </div>
+          <button onclick="toggleCart()" class="p-2 rounded-lg hover:bg-carbon/10 text-carbon font-bold text-lg">✕</button>
+        </div>
+
+        <div id="cart-items" class="mt-4 space-y-3 max-h-[55vh] overflow-y-auto pr-1">
+          <!-- Items dinámicos -->
+        </div>
+      </div>
+
+      <div class="border-t border-carbon/15 pt-4 space-y-3">
+        <div class="flex items-center justify-between text-lg font-extrabold">
+          <span>Total estimado:</span>
+          <span id="cart-total" class="text-terracota font-display text-2xl">$0.00</span>
+        </div>
+
+        <a href="tel:4422235456" class="block w-full bg-terracota hover:bg-terracota-dark text-white text-center font-extrabold py-3.5 rounded-xl shadow-md transition">
+          Llamar para ordenar: (442) 223-5456
+        </a>
+
+        <button onclick="copyOrder()" id="copy-btn" class="w-full bg-mostaza hover:bg-mostaza-dark text-carbon font-bold py-2.5 rounded-xl text-sm transition">
+          Copiar resumen de mi orden
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Toast notificación -->
+  <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-carbon text-mostaza border border-mostaza/40 px-4 py-2.5 rounded-full text-sm font-bold shadow-xl opacity-0 pointer-events-none transition-opacity duration-300">
+    Agregado a tu orden
+  </div>
+
+  <script>
+    // Base de datos exacta del menú de Cenaduría Don Blas
+    const menuItems = [
+      // Especialidades
+      { name: "Enchiladas Tradicionales", price: 95, category: "Especialidades", desc: "Orden completa con papas, zanahoria, lechuga y queso." },
+      { name: "Enchiladas de Pollo", price: 95, category: "Especialidades", desc: "Orden completa acompañadas de pollo deshebrado y guarnición." },
+      { name: "1/2 Orden de Enchiladas", price: 65, category: "Especialidades", desc: "Media porción tradicional o de pollo." },
+      { name: "Guajolotes", price: 45, category: "Especialidades", desc: "A elegir: Carne, pollo o jamón." },
+      { name: "Gorditas Tradicionales", price: 20, category: "Especialidades", desc: "Recién hechas con guiso tradicional, queso y salsa." },
+      { name: "Manitas de Puerco", price: 90, category: "Especialidades", desc: "Orden completa preparadas al estilo de la casa." },
+      { name: "1/2 Orden de Manitas de Puerco", price: 50, category: "Especialidades", desc: "Media porción tradicional." },
+      { name: "Pozole", price: 80, category: "Especialidades", desc: "Calientito, servido con rábano, lechuga, cebolla y tostadas." },
+      { name: "Tacos", price: 20, category: "Especialidades", desc: "A elegir: Pollo, carne, papa o sesos." },
+
+      // Antojitos y Tortas
+      { name: "Consomé", price: 50, category: "Antojitos", desc: "Caldo tradicional bien servido y calientito." },
+      { name: "Flautas de Carne", price: 70, category: "Antojitos", desc: "Crujientes, bañadas con crema, queso y lechuga." },
+      { name: "Quesadillas", price: 20, category: "Antojitos", desc: "Tortilla dorada o al comal rellena de queso fundido." },
+      { name: "Sincronizadas", price: 45, category: "Antojitos", desc: "Con jamón y queso derretido." },
+      { name: "Sopes", price: 20, category: "Antojitos", desc: "Base gruesa doradita con frijoles, lechuga, crema y queso." },
+      { name: "Tostadas", price: 45, category: "Antojitos", desc: "A elegir: Carne, pollo, pata o jamón." },
+      { name: "Tortas", price: 45, category: "Antojitos", desc: "A elegir: Carne, pollo o jamón." },
+      { name: "Torta Especial", price: 50, category: "Antojitos", desc: "Combinación especial bien servida de la casa." },
+
+      // Órdenes Extra
+      { name: "Orden de Papas", price: 30, category: "Extras", desc: "Porción extra preparada." },
+      { name: "Orden de Crema", price: 20, category: "Extras", desc: "Porción extra para acompañar tus antojitos." },
+      { name: "Orden de Aguacate", price: 25, category: "Extras", desc: "Rebanadas frescas de aguacate." },
+
+      // Bebidas
+      { name: "Refresco", price: 25, category: "Bebidas", desc: "Variedad de sabores bien fríos." },
+      { name: "Agua de Sabor", price: 25, category: "Bebidas", desc: "Agua fresca preparada del día." }
+    ];
+
+    let selectedCategory = "Todos";
+    let cart = [];
+
+    function setCategory(cat) {
+      selectedCategory = cat;
+      document.querySelectorAll(".cat-btn").forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = "cat-btn active bg-carbon text-mostaza px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition";
+        } else {
+          btn.className = "cat-btn bg-arena text-carbon hover:bg-mostaza/30 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold transition";
+        }
+      });
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const container = document.getElementById("menu-container");
+      const query = document.getElementById("search-input").value.toLowerCase().trim();
+
+      const filtered = menuItems.filter(item => {
+        const matchesCat = selectedCategory === "Todos" || item.category === selectedCategory;
+        const matchesQuery = item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-10 text-carbon/60 font-semibold">No encontramos platillos con "${query}". Intenta con otro término.</div>`;
+        return;
+      }
+
+      const categoriesOrder = ["Especialidades", "Antojitos", "Extras", "Bebidas"];
+      const categoryTitles = {
+        Especialidades: "Especialidades de la Casa",
+        Antojitos: "Antojitos, Tostadas y Tortas",
+        Extras: "Órdenes Extra",
+        Bebidas: "Bebidas"
+      };
+
+      let html = "";
+      categoriesOrder.forEach(cat => {
+        const itemsInCat = filtered.filter(i => i.category === cat);
+        if (itemsInCat.length > 0) {
+          html += `
+            <div class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-carbon/10">
+              <h3 class="font-display font-extrabold text-2xl text-terracota border-b-2 border-mostaza/50 pb-2 mb-5">
+                ${categoryTitles[cat]}
+              </h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                ${itemsInCat.map(item => `
+                  <div class="flex items-start justify-between gap-3 p-3.5 rounded-xl bg-crema/70 hover:bg-arena/60 border border-carbon/5 transition">
+                    <div>
+                      <h4 class="font-bold text-carbon text-base">${item.name}</h4>
+                      <p class="text-xs text-carbon/70 mt-0.5">${item.desc}</p>
+                    </div>
+                    <div class="flex flex-col items-end shrink-0 gap-2">
+                      <span class="font-display font-extrabold text-terracota text-base">$${item.price.toFixed(2)}</span>
+                      <button onclick="addToCart('${item.name}', ${item.price})" class="bg-carbon hover:bg-terracota text-mostaza hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                        + Agregar
+                      </button>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      container.innerHTML = html;
+    }
+
+    function addToCart(name, price) {
+      const existing = cart.find(i => i.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+      updateCartUI();
+      showToast(`+1 ${name}`);
+    }
+
+    function changeQty(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById("cart-badge");
+      const itemsContainer = document.getElementById("cart-items");
+      const totalEl = document.getElementById("cart-total");
+
+      const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+      const totalPrice = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+      badge.textContent = totalQty;
+      totalEl.textContent = `$${totalPrice.toFixed(2)}`;
+
+      if (cart.length === 0) {
+        itemsContainer.innerHTML = `
+          <div class="text-center py-12 text-carbon/60">
+            <p class="font-bold">Tu orden está vacía</p>
+            <p class="text-xs mt-1">Agrega platillos del menú para calcular tu total.</p>
+          </div>
+        `;
+        return;
+      }
+
+      itemsContainer.innerHTML = cart.map((item, idx) => `
+        <div class="flex items-center justify-between gap-3 bg-white p-3 rounded-xl border border-carbon/10">
+          <div>
+            <p class="font-bold text-sm text-carbon">${item.name}</p>
+            <p class="text-xs text-carbon/65">$${item.price.toFixed(2)} c/u</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="changeQty(${idx}, -1)" class="w-7 h-7 rounded-lg bg-arena font-bold text-carbon hover:bg-terracota hover:text-white transition">-</button>
+            <span class="font-bold text-sm w-5 text-center">${item.qty}</span>
+            <button onclick="changeQty(${idx}, 1)" class="w-7 h-7 rounded-lg bg-arena font-bold text-carbon hover:bg-mostaza transition">+</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function toggleCart() {
+      const drawer = document.getElementById("cart-drawer");
+      drawer.classList.toggle("hidden");
+    }
+
+    function copyOrder() {
+      if (cart.length === 0) {
+        showToast("Agrega primero algún platillo");
+        return;
+      }
+      const totalPrice = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+      const lines = cart.map(i => `• ${i.qty}x ${i.name} ($${(i.price * i.qty).toFixed(2)})`);
+      const text = `Pedido Cenaduría Don Blas:\n${lines.join("\n")}\nTotal estimado: $${totalPrice.toFixed(2)}`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("¡Resumen copiado al portapapeles!");
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.remove("opacity-0");
+      setTimeout(() => toast.classList.add("opacity-0"), 2000);
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderMenu();
+    updateCartUI();
+  </script>
+</body>
+</html>
